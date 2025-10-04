@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package stocktrading;
+option java_multiple_files = true;
+option java_package = "com.example";
+option java_outer_classname = "StockTradingProto";
+
+message StockRequest {
+    string stock_symbol=1;
+
+}
+
+message StockResponse {
+    string stock_symbol=1;
+    double price=2;
+    string timestamp=3;
+
+}
+
+service StockTradingService {
+    //Uniary RPC
+    rpc GetStockPrice(StockRequest) returns (StockResponse);
+
+    //server streaming
+    rpc subscribeStockPrice(StockRequest) returns (stream StockResponse);
+}
