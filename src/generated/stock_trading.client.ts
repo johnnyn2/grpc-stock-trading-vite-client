@@ -4,6 +4,9 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { StockTradingService } from "./stock_trading";
+import type { OrderSummary } from "./stock_trading";
+import type { StockOrder } from "./stock_trading";
+import type { ClientStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { StockResponse } from "./stock_trading";
@@ -26,6 +29,12 @@ export interface IStockTradingServiceClient {
      * @generated from protobuf rpc: subscribeStockPrice
      */
     subscribeStockPrice(input: StockRequest, options?: RpcOptions): ServerStreamingCall<StockRequest, StockResponse>;
+    /**
+     * client streaming
+     *
+     * @generated from protobuf rpc: bulkStockOrder
+     */
+    bulkStockOrder(options?: RpcOptions): ClientStreamingCall<StockOrder, OrderSummary>;
 }
 /**
  * @generated from protobuf service stocktrading.StockTradingService
@@ -53,5 +62,14 @@ export class StockTradingServiceClient implements IStockTradingServiceClient, Se
     subscribeStockPrice(input: StockRequest, options?: RpcOptions): ServerStreamingCall<StockRequest, StockResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
         return stackIntercept<StockRequest, StockResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * client streaming
+     *
+     * @generated from protobuf rpc: bulkStockOrder
+     */
+    bulkStockOrder(options?: RpcOptions): ClientStreamingCall<StockOrder, OrderSummary> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        return stackIntercept<StockOrder, OrderSummary>("clientStreaming", this._transport, method, opt);
     }
 }

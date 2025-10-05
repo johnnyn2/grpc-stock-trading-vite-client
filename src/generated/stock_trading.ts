@@ -37,6 +37,48 @@ export interface StockResponse {
      */
     timestamp: string;
 }
+/**
+ * @generated from protobuf message stocktrading.StockOrder
+ */
+export interface StockOrder {
+    /**
+     * @generated from protobuf field: string order_id = 1
+     */
+    orderId: string;
+    /**
+     * @generated from protobuf field: string stock_symbol = 2
+     */
+    stockSymbol: string;
+    /**
+     * @generated from protobuf field: int32 quantity = 3
+     */
+    quantity: number;
+    /**
+     * @generated from protobuf field: double price = 4
+     */
+    price: number;
+    /**
+     * @generated from protobuf field: string order_type = 5
+     */
+    orderType: string;
+}
+/**
+ * @generated from protobuf message stocktrading.OrderSummary
+ */
+export interface OrderSummary {
+    /**
+     * @generated from protobuf field: int32 total_orders = 1
+     */
+    totalOrders: number;
+    /**
+     * @generated from protobuf field: double total_amount = 2
+     */
+    totalAmount: number;
+    /**
+     * @generated from protobuf field: int32 success_count = 3
+     */
+    successCount: number;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class StockRequest$Type extends MessageType<StockRequest> {
     constructor() {
@@ -147,10 +189,153 @@ class StockResponse$Type extends MessageType<StockResponse> {
  * @generated MessageType for protobuf message stocktrading.StockResponse
  */
 export const StockResponse = new StockResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StockOrder$Type extends MessageType<StockOrder> {
+    constructor() {
+        super("stocktrading.StockOrder", [
+            { no: 1, name: "order_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "stock_symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "quantity", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "order_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StockOrder>): StockOrder {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.orderId = "";
+        message.stockSymbol = "";
+        message.quantity = 0;
+        message.price = 0;
+        message.orderType = "";
+        if (value !== undefined)
+            reflectionMergePartial<StockOrder>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StockOrder): StockOrder {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string order_id */ 1:
+                    message.orderId = reader.string();
+                    break;
+                case /* string stock_symbol */ 2:
+                    message.stockSymbol = reader.string();
+                    break;
+                case /* int32 quantity */ 3:
+                    message.quantity = reader.int32();
+                    break;
+                case /* double price */ 4:
+                    message.price = reader.double();
+                    break;
+                case /* string order_type */ 5:
+                    message.orderType = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StockOrder, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string order_id = 1; */
+        if (message.orderId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.orderId);
+        /* string stock_symbol = 2; */
+        if (message.stockSymbol !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.stockSymbol);
+        /* int32 quantity = 3; */
+        if (message.quantity !== 0)
+            writer.tag(3, WireType.Varint).int32(message.quantity);
+        /* double price = 4; */
+        if (message.price !== 0)
+            writer.tag(4, WireType.Bit64).double(message.price);
+        /* string order_type = 5; */
+        if (message.orderType !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.orderType);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message stocktrading.StockOrder
+ */
+export const StockOrder = new StockOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OrderSummary$Type extends MessageType<OrderSummary> {
+    constructor() {
+        super("stocktrading.OrderSummary", [
+            { no: 1, name: "total_orders", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "total_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "success_count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<OrderSummary>): OrderSummary {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.totalOrders = 0;
+        message.totalAmount = 0;
+        message.successCount = 0;
+        if (value !== undefined)
+            reflectionMergePartial<OrderSummary>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OrderSummary): OrderSummary {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 total_orders */ 1:
+                    message.totalOrders = reader.int32();
+                    break;
+                case /* double total_amount */ 2:
+                    message.totalAmount = reader.double();
+                    break;
+                case /* int32 success_count */ 3:
+                    message.successCount = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OrderSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 total_orders = 1; */
+        if (message.totalOrders !== 0)
+            writer.tag(1, WireType.Varint).int32(message.totalOrders);
+        /* double total_amount = 2; */
+        if (message.totalAmount !== 0)
+            writer.tag(2, WireType.Bit64).double(message.totalAmount);
+        /* int32 success_count = 3; */
+        if (message.successCount !== 0)
+            writer.tag(3, WireType.Varint).int32(message.successCount);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message stocktrading.OrderSummary
+ */
+export const OrderSummary = new OrderSummary$Type();
 /**
  * @generated ServiceType for protobuf service stocktrading.StockTradingService
  */
 export const StockTradingService = new ServiceType("stocktrading.StockTradingService", [
     { name: "GetStockPrice", options: {}, I: StockRequest, O: StockResponse },
-    { name: "subscribeStockPrice", serverStreaming: true, options: {}, I: StockRequest, O: StockResponse }
+    { name: "subscribeStockPrice", serverStreaming: true, options: {}, I: StockRequest, O: StockResponse },
+    { name: "bulkStockOrder", clientStreaming: true, options: {}, I: StockOrder, O: OrderSummary }
 ]);
