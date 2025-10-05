@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { StockTradingService } from "./stock_trading";
+import type { TradeStatus } from "./stock_trading";
+import type { DuplexStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { OrderSummary } from "./stock_trading";
 import type { StockOrder } from "./stock_trading";
 import type { ClientStreamingCall } from "@protobuf-ts/runtime-rpc";
@@ -35,6 +37,12 @@ export interface IStockTradingServiceClient {
      * @generated from protobuf rpc: bulkStockOrder
      */
     bulkStockOrder(options?: RpcOptions): ClientStreamingCall<StockOrder, OrderSummary>;
+    /**
+     * bidirectional
+     *
+     * @generated from protobuf rpc: liveTrading
+     */
+    liveTrading(options?: RpcOptions): DuplexStreamingCall<StockOrder, TradeStatus>;
 }
 /**
  * @generated from protobuf service stocktrading.StockTradingService
@@ -71,5 +79,14 @@ export class StockTradingServiceClient implements IStockTradingServiceClient, Se
     bulkStockOrder(options?: RpcOptions): ClientStreamingCall<StockOrder, OrderSummary> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<StockOrder, OrderSummary>("clientStreaming", this._transport, method, opt);
+    }
+    /**
+     * bidirectional
+     *
+     * @generated from protobuf rpc: liveTrading
+     */
+    liveTrading(options?: RpcOptions): DuplexStreamingCall<StockOrder, TradeStatus> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<StockOrder, TradeStatus>("duplex", this._transport, method, opt);
     }
 }

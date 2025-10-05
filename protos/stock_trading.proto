@@ -31,6 +31,13 @@ message OrderSummary {
     int32 success_count=3;
 }
 
+message TradeStatus {
+    string order_id=1;
+    string status=2; // execute, failed, pending
+    string message=3; // reason if failed or success message
+    string timestamp=4;
+}
+
 service StockTradingService {
     //Uniary RPC
     rpc GetStockPrice(StockRequest) returns (StockResponse);
@@ -40,4 +47,7 @@ service StockTradingService {
 
     // client streaming
     rpc bulkStockOrder(stream StockOrder) returns (OrderSummary);
+
+    // bidirectional
+    rpc liveTrading(stream StockOrder) returns (stream TradeStatus);
 }

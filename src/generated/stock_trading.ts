@@ -79,6 +79,27 @@ export interface OrderSummary {
      */
     successCount: number;
 }
+/**
+ * @generated from protobuf message stocktrading.TradeStatus
+ */
+export interface TradeStatus {
+    /**
+     * @generated from protobuf field: string order_id = 1
+     */
+    orderId: string;
+    /**
+     * @generated from protobuf field: string status = 2
+     */
+    status: string; // execute, failed, pending
+    /**
+     * @generated from protobuf field: string message = 3
+     */
+    message: string; // reason if failed or success message
+    /**
+     * @generated from protobuf field: string timestamp = 4
+     */
+    timestamp: string;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class StockRequest$Type extends MessageType<StockRequest> {
     constructor() {
@@ -331,11 +352,83 @@ class OrderSummary$Type extends MessageType<OrderSummary> {
  * @generated MessageType for protobuf message stocktrading.OrderSummary
  */
 export const OrderSummary = new OrderSummary$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TradeStatus$Type extends MessageType<TradeStatus> {
+    constructor() {
+        super("stocktrading.TradeStatus", [
+            { no: 1, name: "order_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "status", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "timestamp", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TradeStatus>): TradeStatus {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.orderId = "";
+        message.status = "";
+        message.message = "";
+        message.timestamp = "";
+        if (value !== undefined)
+            reflectionMergePartial<TradeStatus>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TradeStatus): TradeStatus {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string order_id */ 1:
+                    message.orderId = reader.string();
+                    break;
+                case /* string status */ 2:
+                    message.status = reader.string();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                case /* string timestamp */ 4:
+                    message.timestamp = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TradeStatus, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string order_id = 1; */
+        if (message.orderId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.orderId);
+        /* string status = 2; */
+        if (message.status !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.status);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        /* string timestamp = 4; */
+        if (message.timestamp !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.timestamp);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message stocktrading.TradeStatus
+ */
+export const TradeStatus = new TradeStatus$Type();
 /**
  * @generated ServiceType for protobuf service stocktrading.StockTradingService
  */
 export const StockTradingService = new ServiceType("stocktrading.StockTradingService", [
     { name: "GetStockPrice", options: {}, I: StockRequest, O: StockResponse },
     { name: "subscribeStockPrice", serverStreaming: true, options: {}, I: StockRequest, O: StockResponse },
-    { name: "bulkStockOrder", clientStreaming: true, options: {}, I: StockOrder, O: OrderSummary }
+    { name: "bulkStockOrder", clientStreaming: true, options: {}, I: StockOrder, O: OrderSummary },
+    { name: "liveTrading", serverStreaming: true, clientStreaming: true, options: {}, I: StockOrder, O: TradeStatus }
 ]);
